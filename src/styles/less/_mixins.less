@@ -1,0 +1,223 @@
+.scrollbar() {
+  @scrollbar-size: 4px;
+  overflow: hidden overlay;
+  // margin-right: -@scrollbar-width;
+  // scrollbar-gutter: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+    opacity: 0;
+    transition: 300ms;
+  }
+
+  &:hover::-webkit-scrollbar {
+    display: block;
+    opacity: 1;
+    width: @scrollbar-size;
+    height: @scrollbar-size;
+    transition: 300ms;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: transparent;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #888;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+.clamp-line-ellipsis(@line-count: 1) {
+  -webkit-line-clamp: @line-count;
+  line-clamp: @line-count;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.overlay() {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.image-cover() {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.short-title() {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// fixed value
+.square(@value) {
+  width: @value;
+  height: @value;
+}
+
+.rect(@width, @height: auto) {
+  width: @width;
+  height: @height;
+}
+
+.fluid-square(@width) {
+  position: relative;
+  width: @width;
+
+  &::before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+  }
+}
+
+.icon-button-circle() {
+  .square(36px);
+  .border-round();
+  .inline-flex(center, center);
+  padding: 0;
+  color: var(--dark);
+  background-color: transparent;
+
+  &:hover {
+    background-color: var(--transparent-black-3);
+  }
+}
+
+.flex(@align-items: center, @justify-content: space-between) {
+  display: flex;
+  align-items: @align-items;
+  justify-content: @justify-content;
+}
+
+.inline-flex(@align-items: center, @justify-content: space-between) {
+  display: inline-flex;
+  align-items: @align-items;
+  justify-content: @justify-content;
+}
+
+.margin-x(@value) {
+  margin-left: @value;
+  margin-right: @value;
+}
+.margin-y(@value) {
+  margin-top: @value;
+  margin-bottom: @value;
+}
+.padding-x(@value) {
+  padding-left: @value;
+  padding-right: @value;
+}
+.padding-y(@value) {
+  padding-top: @value;
+  padding-bottom: @value;
+}
+.border-round {
+  border-radius: 99px;
+}
+
+.zm-tab-bar {
+  .flex(stretch, center);
+  .border-round();
+  background-color: var(--transparent-black-2);
+  font-size: 12px;
+  padding: 3px;
+
+  &__item {
+    .border-round();
+    flex: 1 1 auto;
+    line-height: normal;
+    padding: 5px 15px;
+    cursor: pointer;
+    color: #dadada;
+
+    &.active {
+      font-weight: 500;
+      color: #fff;
+      background-color: var(--transparent-black-3);
+    }
+
+    &:not(.active):hover {
+      color: #fff;
+    }
+  }
+}
+
+// WIDTH SCREEN RESPONSIVE
+// .screen-width-max(@max-width, @rules) {
+.media-breakpoint-max(@max-width, @rules) {
+  @media (max-width: @max-width) {
+    @rules();
+  }
+}
+
+// .screen-width-min(@min-width, @rules) {
+.media-breakpoint-min(@min-width, @rules) {
+  @media (min-width: @min-width) {
+    @rules();
+  }
+}
+
+.media-breakpoint-between(@min-width, @max-width, @rules) {
+  @media (min-width: @min-width) and (max-width: @max-width) {
+    @rules();
+  }
+}
+
+// SPECIFIC SIZE DEVICES (from large to small)
+.laptop(@rules) {
+  .media-breakpoint-max(1200px, @rules);
+}
+
+.laptop-only(@rules) {
+  .media-breakpoint-between(@tablet-width-max + 0.02px, 1200px, @rules);
+}
+
+.tablet(@rules) {
+  .media-breakpoint-max(@tablet-width-max, @rules);
+}
+
+.tablet-only(@rules) {
+  .media-breakpoint-between(@mobile-width-max + 0.02px, @tablet-width-max, @rules);
+}
+
+.sm-tablet(@rules) {
+  .media-breakpoint-max(768px - 0.02px, @rules);
+}
+
+.mobile(@rules) {
+  .media-breakpoint-max(@mobile-width-max, @rules);
+}
+
+// COMMON UTILITIES MIXINS AND CLASSES
+.list-none {
+  list-style-type: none;
+}
+
+// SIZING MIXINS
+.col-span(@num) {
+  @value: @num * (100% / 12);
+  flex-basis: @value;
+  // flex: 0 0 @value;
+  width: @value;
+}
